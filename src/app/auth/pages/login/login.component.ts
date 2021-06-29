@@ -27,13 +27,17 @@ export class LoginComponent {
     const {email, password} = this.miForm.value;
 
     this.authService.login(email, password)
-    .subscribe(resp => {
-      console.log(resp)
+    .subscribe(ok => {
+      if(ok){
+        this.router.navigateByUrl("/dashboard")
+      }
+
+      // Mostrar erro
     });
 
 
 
-    //this.router.navigateByUrl("/dashboard")
+    //
   }
 
 }
