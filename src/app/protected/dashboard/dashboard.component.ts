@@ -23,6 +23,7 @@ export class DashboardComponent {
               private authService: AuthService) { }
 
   logout() {
+    localStorage.removeItem('tokenNG')
     this.router.navigateByUrl('/auth');
   }
 
