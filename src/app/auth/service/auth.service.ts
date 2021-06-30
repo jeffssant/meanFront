@@ -62,4 +62,27 @@ export class AuthService {
       catchError(err => of(false))
     )
   }
+
+
+  registrer(name:string, email:string, password:string,) {
+
+    const url = `${this.baseUrl}/auth/new`;
+    const body = {name, email, password};
+
+    return this.http.post<AuthResponse>(url, body)
+    .pipe(
+      tap(resp => {
+        localStorage.setItem('tokenNG', resp.token!);
+        if(resp.ok){
+          this._user = {
+            name: resp.name!,
+            uid: resp.uid!
+          }
+        }
+      }),
+      map(resp => resp.ok),
+      catchError(err => of(err.error.msg))
+    )
+
+  }
 }
