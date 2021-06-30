@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import  Swal  from "sweetalert2";
+
 import { AuthService } from '../../service/auth.service';
 
 @Component({
@@ -22,17 +24,18 @@ export class LoginComponent {
               private authService: AuthService ) { }
 
   login() {
-    console.log(this.miForm.value);
 
     const {email, password} = this.miForm.value;
 
     this.authService.login(email, password)
     .subscribe(ok => {
-      if(ok){
-        this.router.navigateByUrl("/dashboard")
+      console.log(ok);
+      if(ok === true){
+        this.router.navigateByUrl("/dashboard");
+        return;
       }
 
-      // Mostrar erro
+      Swal.fire('Error', ok, 'error')
     });
 
 
